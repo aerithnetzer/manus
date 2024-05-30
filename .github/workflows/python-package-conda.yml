@@ -23,4 +23,5 @@ jobs:
         conda env update --file environment.yml --name manus
     - name: Test with unittest
       run: |
+        conda activate manus
         python -m unittest discover tests/
