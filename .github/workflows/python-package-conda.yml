@@ -29,3 +29,5 @@ jobs:
         conda activate manus
         python -m unittest discover tests/
       shell: bash
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
