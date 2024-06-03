@@ -6,6 +6,7 @@ from openai import OpenAI
 import docx
 import pypandoc
 from pathlib import Path
+import os
 
 
 class Manuscript:
@@ -26,11 +27,19 @@ class Manuscript:
         pdoc_args = [
             "--citeproc",
             "--csl",
-            "./styles/apa.csl",
+            "../styles/apa.csl",
         ]
+        print("source_file:", self.source_file)  # Debugging line
         print("PATH:\n\n", Path(self.source_file))
+
+        # Get the directory of the current script
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        relative_source_file = os.path.relpath(self.source_file, script_dir)
+
+        print("source_file:", relative_source_file)  # Debugging line
+
         pypandoc.convert_file(
-            Path(self.source_file),
+            str(Path(relative_source_file)),
             to="pdf",
             format="md",
             outputfile=output_file,

@@ -5,6 +5,7 @@ channels:
 dependencies:
   - annotated-types
   - anyio
+  - bibtexparser
   - bzip2
   - ca-certificates
   - certifi
