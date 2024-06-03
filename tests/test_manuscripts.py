@@ -14,22 +14,22 @@ class TestManuscript(unittest.TestCase):
 
     def test_create_pdf(self):
         manuscript = Manuscript(
-            source_file="tests/files/anthropocene.md",
+            source_file="anthropocene.md",
             csl="apa",
             bib="bibliography.bib",
         )
-        manuscript.create_pdf("tests/files/anthropocene.pdf")
+        manuscript.create_pdf("anthropocene.pdf")
 
-        self.assertTrue(os.path.exists("tests/files/anthropocene.pdf"))
+        self.assertTrue(os.path.exists("anthropocene.pdf"))
 
     def test_read_docx(self):
         manuscript = Manuscript(
-            source_file="tests/files/anthropocene.md",
+            source_file="anthropocene.md",
             csl="apa",
             bib="bibliography.bib",
         )
-        manuscript.read_docx("tests/files/anthropocene.docx")
-        self.assertEqual(len(manuscript.sections), 1)
+        manuscript.read_docx("anthropocene.docx")
+        self.assertEqual(len(manuscript.sections), 7)
 
 
 if __name__ == "__main__":
