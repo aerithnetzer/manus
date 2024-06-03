@@ -8,7 +8,37 @@ import pypandoc
 from pathlib import Path
 
 
-class Citation:
+class Manuscript:
+    def __init__(self, source_file, csl, bib):
+        self.sections = []
+        self.source_file = source_file
+        self.csl = csl
+        self.bib = bib
+
+    def read_docx(self, filename):
+        # Read a manuscript from a file
+        doc = docx.Document(filename)
+        for para in doc.paragraphs:
+            self.sections.append(para.text)
+
+    def create_pdf(self, output_file):
+        # Create a PDF from a manuscript
+        pdoc_args = [
+            "--citeproc",
+            "--csl",
+            "./styles/apa.csl",
+        ]
+        print("PATH:\n\n", Path(self.source_file))
+        pypandoc.convert_file(
+            Path(self.source_file),
+            to="pdf",
+            format="md",
+            outputfile=output_file,
+            extra_args=pdoc_args,
+        )
+
+
+class Citation(Manuscript):
     """A class to represent a citation in any given format
 
     Attributes:
@@ -73,33 +103,3 @@ class Citation:
             filters=filters,
         )
         return output
-
-
-class Manuscript:
-    def __init__(self, source_file, csl, bib):
-        self.sections = []
-        self.source_file = source_file
-        self.csl = csl
-        self.bib = bib
-
-    def read_docx(self, filename):
-        # Read a manuscript from a file
-        doc = docx.Document(filename)
-        for para in doc.paragraphs:
-            self.sections.append(para.text)
-
-    def create_pdf(self, output_file):
-        # Create a PDF from a manuscript
-        pdoc_args = [
-            "--citeproc",
-            "--csl",
-            "./styles/apa.csl",
-        ]
-        print("PATH:\n\n", Path(self.source_file))
-        pypandoc.convert_file(
-            Path(self.source_file),
-            to="pdf",
-            format="md",
-            outputfile=output_file,
-            extra_args=pdoc_args,
-        )
